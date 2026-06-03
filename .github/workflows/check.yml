@@ -12,13 +12,68 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
+      - name: Validate skill package
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import re
+          from pathlib import Path
 
-      - name: Install
-        run: npm ci
+          root = Path(".")
+          skill = root / "SKILL.md"
+          text = skill.read_text(encoding="utf-8")
 
-      - name: Run checks
-        run: npm run check
+          if not text.startswith("---\n"):
+              raise SystemExit("SKILL.md must start with YAML frontmatter")
+
+          match = re.match(r"---\n(.*?)\n---\n", text, re.S)
+          if not match:
+              raise SystemExit("SKILL.md frontmatter is not closed")
+
+          frontmatter = match.group(1)
+          fields = {}
+          for line in frontmatter.splitlines():
+              if ":" not in line:
+                  raise SystemExit(f"Invalid frontmatter line: {line}")
+              key, value = line.split(":", 1)
+              fields[key.strip()] = value.strip()
+
+          if fields.get("name") != "ai-code-governance":
+              raise SystemExit("SKILL.md name must be ai-code-governance")
+
+          if not fields.get("description"):
+              raise SystemExit("SKILL.md description is required")
+
+          allowed = {"name", "description"}
+          extra = set(fields) - allowed
+          if extra:
+              raise SystemExit(f"Unexpected frontmatter fields: {sorted(extra)}")
+
+          required_paths = [
+              "agents/openai.yaml",
+              "templates/AGENTS.md",
+              "templates/CLAUDE.md",
+              "templates/CODEX.md",
+              "templates/docs/architecture.md",
+              "templates/docs/project-index.md",
+              "templates/docs/dependency-policy.md",
+              "templates/docs/coding-standards.md",
+              "templates/docs/agent-workflows.md",
+              "prompts/preflight.md",
+              "prompts/implementation.md",
+              "prompts/refactor.md",
+              "prompts/review.md",
+              "snippets/package-json-scripts.json",
+              "snippets/jscpd.json",
+          ]
+
+          missing = [path for path in required_paths if not (root / path).exists()]
+          if missing:
+              raise SystemExit(f"Missing required files: {missing}")
+
+          for path in ["snippets/package-json-scripts.json", "snippets/jscpd.json"]:
+              json.loads((root / path).read_text(encoding="utf-8"))
+
+          print("Skill package checks passed.")
+          PY
