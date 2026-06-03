@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Code Governance"
+  short_description: "约束 AI 编码先检索复用、去重、控依赖、跑验证"
+  default_prompt: "Use $ai-code-governance to implement this change with search-before-write, reuse, dependency control, verification, and a concise change report."

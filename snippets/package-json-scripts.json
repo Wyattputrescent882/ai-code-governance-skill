@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "format": "prettier --check .",
+    "dupcheck": "jscpd src --threshold 3",
+    "unused": "knip",
+    "check": "npm run lint && npm run typecheck && npm run test && npm run dupcheck && npm run unused"
+  },
+  "devDependencies_hint": {
+    "jscpd": "重复代码检测",
+    "knip": "未使用文件和未使用导出检测",
+    "depcheck": "未使用依赖检测，可选"
+  }
+}
